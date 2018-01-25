@@ -1,39 +1,98 @@
 library(shiny)
 source("prediction.R")
-riskscore <- read.delim("data/AAMR_risk_score.txt", header = T)
+source("prediction_hg38.R")
 
+riskscore <- read.delim("data/Gene_level_prediction.txt",header = T)
 
 shinyServer(function(input, output){
-  ###gene level
-  score <- reactive({
-    as.numeric(unique(riskscore[riskscore$Gene_name==toupper(input$geneID),2]))
-  })
-  rank <- reactive({
-    as.numeric(unique(riskscore[riskscore$Gene_name==toupper(input$geneID),1]))
-  })
-  output$textscr <- renderText({ 
-    paste("AAMR risk score: ",score(), sep="") 
-  })
-  output$textrnk <- renderText({
-    paste("Rank: ",rank(), "/12074", sep="")
+  
+  allAlu <- reactive({
+          as.character(riskscore[riskscore$genename==toupper(input$geneID),2])
+  }) 
+  
+  CNVAlu <- reactive({
+          as.character(riskscore[riskscore$genename==toupper(input$geneID),3])
+  }) 
+  MIMID<- reactive({
+            as.character(riskscore[riskscore$genename==toupper(input$geneID),8])
+          })     
+  
+  MIMscore <- reactive({
+          round(as.numeric(riskscore[riskscore$genename==toupper(input$geneID),6]),digits = 3)
+  }) 
+  
+  MIMrank <- reactive({
+            as.numeric(riskscore[riskscore$genename==toupper(input$geneID),5])
+          })
+  
+  allscore <- reactive({
+          round(as.numeric(riskscore[riskscore$genename==toupper(input$geneID),4]), digits= 3)
   })
   
-  output$hist <- renderPlot({
+  allrank <- reactive({
+          as.numeric(riskscore[riskscore$genename==toupper(input$geneID),11])
+  })
+  
+  output$textallAlu <- renderText({ 
+          paste("Count of total intersecting Alu pairs: ", allAlu(), sep="") 
+  }) 
+  output$textCNVAlu <- renderText({ 
+          paste("Count of predicted CNV-Alu pairs: ", CNVAlu(), sep="") 
+  }) 
+  
+  output$textMIMID <- renderText({ 
+            paste("MIM number: ", MIMID(), sep="") 
+          })      
+  output$textMIMscore <- renderText({ 
+            paste("AAMR risk score for MIM genes: ", MIMscore(), sep="") 
+          })      
+  output$textMIMrnk <- renderText({
+            paste("Rank in MIM genes: ",MIMrank(), "/12,074", sep="")
+          })      
+  output$textallscore <- renderText({ 
+          paste("AAMR risk score for available RefSeq genes: ", allscore(), sep="") 
+  })         
+  
+  output$textallrank <- renderText({
+          paste("Rank in available RefSeq genes: ",allrank(), "/23,637", sep="")
+  })    
+  
+  
+  output$hist1 <- renderPlot({
           par(mar=c(2.5,2.5,1,1)+0.1, mgp = c(1.5, 0.5, 0))
-          hist(unique(riskscore[,2:3])[,1],breaks=100, xlab="AAMR risk score", main=NULL)
-          
-          abline(v=score(),col="red")
-          
-          
-  })
+          hist(unique(riskscore[,c(1,6)])[,2],breaks=100, xlab="AAMR risk scores for OMIM genes", main=NULL)
   
+          abline(v=MIMscore(),col="red")
+  
+  
+  })      
+        
+  output$hist2 <- renderPlot({
+          par(mar=c(2.5,2.5,1,1)+0.1, mgp = c(1.5, 0.5, 0))
+          hist(unique(riskscore[,c(1,4)])[,2],breaks=100, xlab="AAMR risk scores for RefSeq genes", main=NULL)
+          
+          abline(v=allscore(),col="red")
+          
+          
+  })      
+        
+        
+   
+        
   ###interval level
-  
-  df <- eventReactive(input$go,{prediction(input$GI5,input$GI3)})
-  
+  my_data <- eventReactive(input$go,{
+          if(input$hg=="GRCh37_hg19"){
+          df <-  prediction_hg19(input$GI5,input$GI3)
+          
+          }else {
+          df <- prediction_hg38(input$GI5,input$GI3)
+          
+          }
+          })
+
   output$table1 <- renderTable({
-    df()
-  }, include.rownames = FALSE)
+       my_data()       
+     }, include.rownames = FALSE)
   
   
   
