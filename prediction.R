@@ -2,7 +2,7 @@
 
 
 
-prediction <- function(up,down){
+prediction_hg19 <- function(up,down){
   
   setwd("/var/shiny-server/www/xiaofei/Alu_app")
   up2 <-  unlist(strsplit(gsub(" ", "", up, fixed = TRUE),"\n|:|-"))
