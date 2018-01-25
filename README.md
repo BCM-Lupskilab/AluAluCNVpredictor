@@ -1,11 +1,11 @@
-# AAMR-Predictor
-Alu elements, the short interspersed element numbering >1 million copies per human genome, are often found at the breakpoint junctions of genomic rearrangements that can cause disease. To identify the impact of Alu/Alu-mediated rearrangement (AAMR) on genomic variation and human health, we developed a bioinformatic approach to characterize CNV-Alus that are involved in mediating CNVs and predicted genome-wide AAMR hotspot loci. 
+# AluAluCNVpredictor
+Alu elements, the short interspersed element numbering >1 million copies per human genome, are often found at the breakpoint junctions of genomic rearrangements that can cause disease. To identify the impact of Alu/Alu-mediated CNVs on genomic variation and human health, we developed a bioinformatic approach to characterize CNV-Alus that are involved in mediating CNVs and predicted genome-wide hotspot loci for Alu/Alu-mediated CNVa. 
 
-To query a gene or pairwise interval of interest for the predicted AAMR hotspots, we developed a tool, AAMR-Predictor, which is publicly available (http://omimexplorer.research.bcm.edu:3838/xiaofei/Alu_app/).
+To query a gene or pairwise interval of interest for the predicted hotspots, we developed a tool, AluAluCNVpredictor, which is publicly available (http://omimexplorer.research.bcm.edu:3838/xiaofei/Alu_app/).
 
 ##Query prediction results at a gene-level
 
-We assigned an AAMR risk score for each of 12,074 OMIM genes and 23,637 RefSeq genes seperately. The user could input a gene name (e.g., SPAST) and receive the count of tesing Alu pairs/predicted CNV-Alu pairs, the risk score, rank and the position (a red line) on the distribution of AAMR risk scores. We suggest a score of 0.6 as a loose ‘cut off’ for at-risk genes. Genes with a score greater than 0.6 might be more susceptible for AAMR. 
+We assigned a risk score for each of 12,074 OMIM genes and 23,637 RefSeq genes seperately. The user could input a gene name (e.g., SPAST) and receive the count of tesing Alu pairs/predicted CNV-Alu pairs, the risk score, rank and the position (a red line) on the distribution of risk scores. We suggest a score of 0.6 as a loose ‘cut off’ for at-risk genes. Genes with a score greater than 0.6 might be more susceptible for Alu/Alu mediated CNVs. 
 
 ##Query prediction results at a genomic interval-level 
 
