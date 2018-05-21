@@ -1,7 +1,7 @@
 # AluAluCNVpredictor
 Alu elements, the short interspersed element numbering >1 million copies per human genome, are often found at the breakpoint junctions of genomic rearrangements that can cause disease. To identify the impact of Alu/Alu-mediated CNVs on genomic variation and human health, we developed a bioinformatic approach to characterize CNV-Alus that are involved in mediating CNVs and predicted genome-wide hotspot loci for Alu/Alu-mediated CNVa. 
 
-To query a gene or pairwise interval of interest for the predicted hotspots, we developed a tool, AluAluCNVpredictor, which is publicly available (http://omimexplorer.research.bcm.edu:3838/xiaofei/Alu_app/).
+To query a gene or pairwise interval of interest for the predicted hotspots, we developed a tool, AluAluCNVpredictor, which is publicly available (http://alualucnvpredictor.research.bcm.edu:3838/).
 
 ##Query prediction results at a gene-level
 
